@@ -20,4 +20,7 @@ RUN curl -LOJ https://github.com/Kitware/CMake/releases/download/v3.19.1/cmake-3
 RUN sudo apt-get update -y
 RUN sudo apt-get install -y ninja-build
 
+RUN sudo apt-get install python3-pip
+RUN pip3 install python-decouple
+
 WORKDIR /home/circleci/project
