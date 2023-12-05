@@ -19,22 +19,17 @@ ENV CXX=$CXX
 ARG RANLIB=/usr/bin/ranlib
 ENV RANLIB=$RANLIB
 
-RUN <<END_RUN
-    set -ex
-    apt-get update
-    apt-get upgrade -y
-    apt-get install -y \
-        gcc-$COMPILER_V \
-        g++-$COMPILER_V \
-        ninja-build \
-        curl \
-        git
-    cd $HOME
-    curl -LOJ https://github.com/Kitware/CMake/releases/download/v$V_CMAKE/cmake-$V_CMAKE-linux-x86_64.tar.gz
-    tar -xvf cmake-$V_CMAKE-linux-x86_64.tar.gz
-    rm cmake-$V_CMAKE-linux-x86_64.tar.gz
-    mv cmake-$V_CMAKE-linux-x86_64 cmake-install
-    apt-get purge --auto-remove curl -y
-    apt-get clean
-    apt-get autoclean
-END_RUN
+RUN apt-get update && apt-get upgrade -y \
+    && apt-get install gcc-$COMPILER_V -y \
+    && apt-get install g++-$COMPILER_V -y \
+    && apt-get install ninja-build -y \
+    && apt-get install curl -y \
+    && apt-get install git -y \
+    && cd $HOME \
+    && curl -LOJ https://github.com/Kitware/CMake/releases/download/v$V_CMAKE/cmake-$V_CMAKE-linux-x86_64.tar.gz \
+    && tar -xvf cmake-$V_CMAKE-linux-x86_64.tar.gz \
+    && rm cmake-$V_CMAKE-linux-x86_64.tar.gz \
+    && mv cmake-$V_CMAKE-linux-x86_64 cmake-install \
+    && apt-get purge --auto-remove curl -y \
+    && apt-get clean \
+    && apt-get autoclean
