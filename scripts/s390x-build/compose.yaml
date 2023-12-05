@@ -15,6 +15,15 @@ services:
         source: ${BUILD_DIR}
         target: ${BUILD_DIR}
   ubuntu_x86:
+    build:
+      context: .
+      args:
+        - V_CMAKE=${V_CMAKE}
+        - ARCH=${ARCH}
+        - COMPILER_V=${COMPILER_V}
+        - CC=${CC}
+        - CXX=${CXX}
+        - RANLIB=${RANLIB}
     image: rokodev/crosscompiler-${ARCH}-img:1.0
     container_name: build-host
     platform: linux/amd64

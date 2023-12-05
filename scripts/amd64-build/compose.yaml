@@ -1,5 +1,13 @@
 services:
   ubuntu_x86:
+    build:
+      context: .
+      args:
+        - V_CMAKE=${V_CMAKE}
+        - COMPILER_V=${COMPILER_V}
+        - CC=${CC}
+        - CXX=${CXX}
+        - RANLIB=${RANLIB}
     image: rokodev/compiler-gcc-${COMPILER_V}-img:1.0
     container_name: build-test-host
     platform: linux/amd64
