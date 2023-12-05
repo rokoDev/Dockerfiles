@@ -1,0 +1,53 @@
+services:
+  ubuntu_z:
+    image: ${ARCH}/ubuntu:22.04
+    container_name: test-host
+    platform: linux/${ARCH}
+    tty: true
+    volumes:
+      - sysroot:/lib
+      - sysroot:/usr/lib
+      - sysroot:/usr/include
+      - sysroot:/usr/local/lib
+      - sysroot:/usr/local/include
+      - type: bind
+        read_only: true
+        source: ${BUILD_DIR}
+        target: ${BUILD_DIR}
+  ubuntu_x86:
+    build:
+      context: .
+      args:
+        - V_CMAKE=${V_CMAKE}
+        - ARCH=${ARCH}
+        - COMPILER_V=${COMPILER_V}
+        - CC=${CC}
+        - CXX=${CXX}
+        - RANLIB=${RANLIB}
+    image: rokodev/crosscompiler-${ARCH}-img:1.0
+    container_name: build-host
+    platform: linux/amd64
+    tty: true
+    depends_on:
+      - ubuntu_z
+    environment:
+      - SOURCE_DIR=${SOURCE_DIR}
+      - BUILD_DIR=${BUILD_DIR}
+      - ARCH=${ARCH}
+      - CC=${CC}
+      - CXX=${CXX}
+      - RANLIB=${RANLIB}
+    volumes:
+      - sysroot:/root/sysroot/lib:ro
+      - sysroot:/root/sysroot/usr/lib:ro
+      - sysroot:/root/sysroot/usr/include:ro
+      - sysroot:/root/sysroot/usr/local/lib:ro
+      - sysroot:/root/sysroot/usr/local/include:ro
+      - type: bind
+        source: ${BUILD_DIR}
+        target: ${BUILD_DIR}
+      - type: bind
+        source: ${SOURCE_DIR}
+        target: ${SOURCE_DIR}
+volumes:
+  sysroot:
