@@ -38,6 +38,7 @@ services:
         source: ${BUILD_DIR}
         target: ${BUILD_DIR}
       - type: bind
+        read_only: true
         source: ${SOURCE_DIR}
         target: ${SOURCE_DIR}
 volumes:
