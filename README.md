@@ -6,6 +6,15 @@ To build new image:
  1. `cd path/to/dir/with/dockerfile`
  2. `docker build --tag DockerHubLogin/newimagename:1.0 .`
 
+or via docker-compose(at first we must have our `Dockerfile` and `compose.yaml` to be created in one folder)
+ 1. `cd path/to/dir/with/dockerfile/and/compose/yaml`
+ 2. `docker-compose build --no-cache --parallel`
+
+To set environment variables:
+-----------------------------
+`cd scripts`
+`. ./set-environment.sh -rs`
+
 To be pushed to the DockerHub successfully an image name must match to pattern:
 --------------------------------------------------------------------------------
 

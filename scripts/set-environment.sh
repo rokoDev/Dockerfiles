@@ -2,7 +2,7 @@ DEFAULT_ARCH="s390x"
 DEFAULT_SOURCE_DIR="$HOME/projects"
 DEFAULT_BUILD_DIR="$HOME/builds"
 
-DEFAULT_V_CMAKE="3.27.8"
+DEFAULT_V_CMAKE="3.28.3"
 DEFAULT_COMPILER_V="12"
 DEFAULT_CC="/usr/bin/$DEFAULT_ARCH-linux-gnu-gcc-$DEFAULT_COMPILER_V"
 DEFAULT_CXX="/usr/bin/$DEFAULT_ARCH-linux-gnu-g++-$DEFAULT_COMPILER_V"
@@ -39,8 +39,21 @@ display_help() {
 	echo "                              Default value is: $DEFAULT_CXX"
 	echo "    -r, --ranlib              Set path to ranlib. Example: -r /usr/bin/ranlib"
 	echo "                              Default value is: $DEFAULT_RANLIB"
+	echo "    -rs, --reset              Reset all variables before setting them. Example: -rs"
+	echo "                              Default value is: $DEFAULT_RANLIB"
 	echo
 	exit 1
+}
+
+reset_vars() {
+	unset ARCH
+	unset SOURCE_DIR
+	unset BUILD_DIR
+	unset V_CMAKE
+	unset COMPILER_V
+	unset CC
+	unset CXX
+	unset RANLIB
 }
 
 restore_original_values() {
@@ -80,6 +93,9 @@ while [[ "$#" -gt 0 ]]; do
 	case $1 in
 	-h | --help)
 		display_help
+		;;
+	-rs | --reset)
+		reset_vars
 		;;
 	-v | --verbose)
 		VERBOSE_FLAG="1"

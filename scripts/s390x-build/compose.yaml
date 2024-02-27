@@ -24,7 +24,7 @@ services:
         - CC=${CC}
         - CXX=${CXX}
         - RANLIB=${RANLIB}
-    image: rokodev/crosscompiler-${ARCH}-img:1.0
+    image: rokodev/crosscompiler-${ARCH}-img:1.1
     container_name: build-host
     platform: linux/amd64
     tty: true

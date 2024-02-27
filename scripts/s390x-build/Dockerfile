@@ -1,11 +1,11 @@
-FROM ubuntu@sha256:149d67e29f765f4db62aa52161009e99e389544e25a8f43c8c89d4a445a7ca37
+FROM ubuntu@sha256:81bba8d1dde7fc1883b6e95cd46d6c9f4874374f2b360c8db82620b33f6b5ca1
 
 ARG HOME=/root
 WORKDIR $HOME
 
 ENV PATH "$HOME/cmake-install/bin:$PATH"
 
-ARG V_CMAKE=3.27.8
+ARG V_CMAKE=3.28.3
 
 ARG ARCH=s390x
 ENV ARCH=$ARCH
@@ -28,6 +28,10 @@ RUN apt-get update && apt-get upgrade -y \
     && apt-get install ninja-build -y \
     && apt-get install curl -y \
     && apt-get install git -y \
+    && apt-get -y install gdb-multiarch \
+    && apt-get -y install qemu-user \
+    && mkdir /etc/qemu-binfmt \
+    && ln -s /usr/s390x-linux-gnu /etc/qemu-binfmt/s390x \
     && cd $HOME \
     && curl -LOJ https://github.com/Kitware/CMake/releases/download/v$V_CMAKE/cmake-$V_CMAKE-linux-x86_64.tar.gz \
     && tar -xvf cmake-$V_CMAKE-linux-x86_64.tar.gz \
