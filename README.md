@@ -27,11 +27,25 @@ Example of container creation from an image:
  `docker run -it --platform linux/s390x -t -d --name ubuntu_s390x s390x/ubuntu:22.04 /bin/bash`
 or
  `docker run -it -t -d --name ubuntu_x86 amd64/ubuntu:22.04 /bin/bash`
+or via docker compose:
+ `docker compose up -d`
 
 
 Example of container creation with shared folder and network from an image:
 --------------------------------------------
 `docker run -it --platform linux/s390x --net z_network --ip 172.20.0.10 -p 3333:22 -t -d -v $HOME/myproject/build/s390x:$HOME/myproject/build/s390x --name ubuntu_z s390x/ubuntu:22.04 /bin/bash`
+
+List available networks:
+------------------------
+`docker network ls`
+
+Show info about network s390x_default:
+--------------------------------------
+`docker network inspect s390x_default`
+
+Show info about port mapping(host port will be followed by the container port):
+-------------------------------------------------------------------------------
+`docker container ls --format "table {{.ID}}\t{{.Names}}\t{{.Ports}}" -a`
 
 
 Open running conrainer in terminal:
@@ -39,6 +53,14 @@ Open running conrainer in terminal:
  `docker exec -it ubuntu_s390x bash`
 or
  `docker exec -it ubuntu_x86 bash`
+
+Stop all running containers:
+----------------------------
+`docker stop $(docker ps -a -q)`
+
+Remove all running containers:
+------------------------------
+`docker rm $(docker ps -a -q)`
 
 To safe login:
 ---------------------
